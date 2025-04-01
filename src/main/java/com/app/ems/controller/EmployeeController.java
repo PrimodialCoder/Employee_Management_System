@@ -31,9 +31,23 @@ public class EmployeeController {
         return ResponseEntity.ok(savedEmployee);
     }
 
-    @GetMapping("/all")
+    //Build REST API for get all employees
+    @GetMapping
     public ResponseEntity<List<EmployeeDto>> getAllEmployees() {
         List<EmployeeDto> allEmployees = employeeService.getAllEmployees();
+        if (allEmployees.isEmpty()) {
+            return ResponseEntity.noContent().build(); // Return 204 No Content if the list is empty
+        }
         return ResponseEntity.ok(allEmployees);
     }
+
+    //Build REST API for update employee
+    @PutMapping("{id}")
+    public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable("id") Long employeeId,
+                                                  @RequestBody EmployeeDto employeeDto) {
+        EmployeeDto updatedEmployee = employeeService.updateEmployee(employeeId, employeeDto);
+        return ResponseEntity.ok(updatedEmployee);
+    }
+
+
 }

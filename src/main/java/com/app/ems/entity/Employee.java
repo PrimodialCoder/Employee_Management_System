@@ -21,7 +21,7 @@ public class Employee {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email_id", nullable = false, unique = true)
+    @Column(name = "email_id", nullable = false, unique = true)// due to this unique constraint we can not have duplicate email ids in the database
     private String email;
 
 
