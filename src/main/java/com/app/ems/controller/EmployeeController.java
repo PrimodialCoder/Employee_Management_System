@@ -5,10 +5,9 @@ import com.app.ems.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -25,6 +24,16 @@ public class EmployeeController {
         return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
     }
 
+    //Build REST API for get employee by id
+    @GetMapping("{id}")
+    public ResponseEntity<EmployeeDto> getEmployees(@PathVariable("id") Long employeeId) {
+        EmployeeDto savedEmployee = employeeService.getEmployeeById(employeeId);
+        return ResponseEntity.ok(savedEmployee);
+    }
 
-
+    @GetMapping("/all")
+    public ResponseEntity<List<EmployeeDto>> getAllEmployees() {
+        List<EmployeeDto> allEmployees = employeeService.getAllEmployees();
+        return ResponseEntity.ok(allEmployees);
+    }
 }

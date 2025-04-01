@@ -13,7 +13,7 @@ import lombok.Setter;
 // This class is used to transfer data between the client and server
 public class EmployeeDto {
     private long id;
-    private String firstname;
+    private String firstName;
     private String lastName;
     private String email;
 
