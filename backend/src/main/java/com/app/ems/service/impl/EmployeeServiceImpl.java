@@ -5,6 +5,7 @@ import com.app.ems.exception.ResourceNotFoundException;
 import com.app.ems.mapper.EmployeeMapper;
 import com.app.ems.repository.EmployeeRepository;
 import com.app.ems.service.EmployeeService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.app.ems.entity.Employee;
@@ -56,6 +57,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         Employee updatedEmployeeObj = employeeRepository.save(employee);
         return EmployeeMapper.mapToEmployeeDto(updatedEmployeeObj);
+    }
+
+    @Override
+    public void deleteEmployee(Long employeeId) {
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(
+                () -> new ResourceNotFoundException("Employee not found with id: " + employeeId)
+        );
+        employeeRepository.deleteById(employeeId);
+    }
+
+    @Override
+    @Transactional
+    public void deleteAllEmployees() {
+        employeeRepository.deleteAll();
+        employeeRepository.resetIdSequence();
     }
 
 

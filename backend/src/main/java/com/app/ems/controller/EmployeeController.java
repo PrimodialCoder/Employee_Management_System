@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/employees")
@@ -47,6 +48,20 @@ public class EmployeeController {
                                                   @RequestBody EmployeeDto employeeDto) {
         EmployeeDto updatedEmployee = employeeService.updateEmployee(employeeId, employeeDto);
         return ResponseEntity.ok(updatedEmployee);
+    }
+
+    //Build REST API for delete employee
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteEmployee(@PathVariable("id") Long employeeId) {
+        employeeService.deleteEmployee(employeeId);
+        return ResponseEntity.ok( employeeId+ "- Employee deleted successfully");
+    }
+
+    //Build REST API for delete all employees
+    @DeleteMapping
+    public ResponseEntity<String> deleteAllEmployees() {
+        employeeService.deleteAllEmployees();
+        return ResponseEntity.ok("All Employees are deleted and auto-increment id also got reseted"); // Return 204 No Content after successful deletion
     }
 
 
